@@ -6,6 +6,7 @@ create table notes
     priority varchar(255) check (priority in ('LOW', 'MEDIUM', 'HIGH')),
     text     varchar(255),
     title    varchar(255),
+    date TIMESTAMP,
     primary key (note_id)
 );
 -- User role

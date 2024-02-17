@@ -13,7 +13,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriUtils;
 
+import java.nio.charset.StandardCharsets;
 import java.security.Principal;
 
 @Controller
@@ -65,8 +67,9 @@ public class NotesController {
     @GetMapping("/download/{id}")
     public ResponseEntity<ByteArrayResource> downloadFile(@PathVariable Long id) {
         Note note = notesService.get(id);
+        String encodedTitle = UriUtils.encode(note.getTitle(), StandardCharsets.UTF_8);
 
-        String fileName = "[" + note.getPriority() + "]" + " - " + note.getTitle() + ".txt";
+        String fileName = "[" + note.getPriority() + "]" + " - " + encodedTitle + " - [" + note.getDate() + "].txt";
 
         ByteArrayResource resource = new ByteArrayResource(note.getText().getBytes());
 

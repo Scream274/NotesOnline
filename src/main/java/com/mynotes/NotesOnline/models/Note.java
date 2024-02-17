@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Getter
 @Setter
@@ -33,4 +35,6 @@ public class Note {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private NotesUser user;
+
+    private LocalDateTime date;
 }

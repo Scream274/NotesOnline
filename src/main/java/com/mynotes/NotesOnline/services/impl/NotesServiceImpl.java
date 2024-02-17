@@ -24,6 +24,7 @@ public class NotesServiceImpl implements NotesService {
                 .orElseThrow(() -> new EntityNotFoundException("Note with id '" + id + "' was not found!"));
 
         currentNote.setText(note.getText());
+        currentNote.setDate(note.getDate());
         currentNote.setPriority(note.getPriority());
         currentNote.setTitle(note.getTitle());
 
