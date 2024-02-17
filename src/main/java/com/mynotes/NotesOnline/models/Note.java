@@ -26,4 +26,8 @@ public class Note {
 
     @Enumerated(EnumType.STRING)
     private Priority priority;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private NotesUser user;
 }
