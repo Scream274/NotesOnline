@@ -1,5 +1,6 @@
 package com.mynotes.NotesOnline.models;
 
+import com.mynotes.NotesOnline.models.enums.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -7,6 +8,7 @@ import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -31,6 +33,11 @@ public class NotesUser {
     @Column(nullable = false)
     @NotBlank(message = "Password cant be empty")
     private String password;
+
+    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
+    @Enumerated(EnumType.STRING)
+    private Set<Role> roles = Set.of(Role.USER);
 
     @Override
     public final boolean equals(Object o) {
