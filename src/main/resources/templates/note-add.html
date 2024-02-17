@@ -16,12 +16,14 @@
             <h2 class="text-center mb-4 styled-text">New Note</h2>
             <div class="card">
                 <div class="card-body">
-                    <form action="/add-note" method="post" th:object="${note}">
+                    <form action="/notes/add-note" method="post" th:object="${note}">
                         <div class="form-group mb-2">
+                            <div th:each="err : ${#fields.errors('title')}" th:text="${err}" class="alert alert-danger" role="alert"></div>
                             <label for="title">Title:</label>
                             <input type="text" class="form-control" id="title" name="title" th:value="${note.title}" placeholder="Title" />
                         </div>
                         <div class="form-group mb-2">
+                            <div th:each="err : ${#fields.errors('text')}" th:text="${err}" class="alert alert-danger" role="alert"></div>
                             <label for="text">Text:</label>
                             <textarea class="form-control" id="text" name="text" th:text="${note.text}" rows="4" placeholder="Text"></textarea>
                         </div>

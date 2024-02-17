@@ -2,6 +2,7 @@ package com.mynotes.NotesOnline.models;
 
 import com.mynotes.NotesOnline.models.enums.Priority;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -20,8 +21,10 @@ public class Note {
     @Column(name = "note_id")
     private Long id;
 
+    @Size(min = 3, max = 32, message = "Title must be between 3 and 32 characters")
     private String title;
 
+    @Size(min = 3, max = 500, message = "Text must be between 3 and 500 characters")
     private String text;
 
     @Enumerated(EnumType.STRING)
