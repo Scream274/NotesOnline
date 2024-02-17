@@ -1,0 +1,42 @@
+.note-card {
+    margin-bottom: 15px;
+}
+
+.note-card .card-body {
+    position: relative;
+}
+
+.note-card .btns-group {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 10px;
+}
+
+.custom-card-title {
+    color: darkviolet;
+    text-decoration: underline;
+    font-family: 'Dancing Script', cursive, sans-serif;
+    font-size: 17px;
+}
+
+.styled-text {
+    font-family: 'Dancing Script', 'Dancing Script', cursive;
+    font-size: 58px;
+}
+
+.custom-p{
+    margin-right: 48px;
+}
+
+.btn-add{
+    width: 50px;
+    height: 50px;
+    padding-top: 13px;
+    border-radius: 10px;
+    background-color: darkviolet;
+    border: none;
+}
