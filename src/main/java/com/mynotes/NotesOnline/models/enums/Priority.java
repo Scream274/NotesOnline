@@ -1,9 +1,9 @@
 package com.mynotes.NotesOnline.models.enums;
 
 public enum Priority {
-    LOW("green", "#cfffcf"),
+    HIGH("red", "#fff3f3"),
     MEDIUM("goldenrod", "#ffffd4"),
-    HIGH("red", "#fff3f3");
+    LOW("green", "#cfffcf");
 
     private final String colorCode;
     private final String backColorCode;
