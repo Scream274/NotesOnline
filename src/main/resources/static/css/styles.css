@@ -1,0 +1,42 @@
+body {
+    height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+main {
+    max-width: 400px;
+    margin: auto;
+}
+
+img.logo {
+    width: 360px; /* Adjust the size as needed */
+}
+
+.gradient-green {
+    background: linear-gradient(to right, #00cc66, #009933);
+    border: none;
+    color: white;
+}
+
+.gradient-purple {
+    background: linear-gradient(to right, #800080, #4b0082);
+    border: none;
+    color: white;
+}
+
+.gradient-purple:hover {
+    background: linear-gradient(to right, #4b0082, #800080);
+    color: gold;
+}
+
+.gradient-green:hover {
+    background: linear-gradient(to right, #009933, #00cc66);
+    color: gold;
+}
+
+.styled-text {
+    font-family: 'Dancing Script', 'Dancing Script', cursive;
+    font-size: 58px;
+}
