@@ -1,6 +1,6 @@
 INSERT INTO users (email, password, full_name)
-VALUES ('email@gmail.com',
-        '$2a$12$J49voNvwaTJ1kRH3xox/zuDShJxtvjXR1Ub2l5LK3jt/dcHf8Kdrq', -- secretPassword
+VALUES ('test@gmail.com',
+        '$2a$12$Nqrkpk0sBiQOjx/FT9HMJ.QMyBSps75zbTOcPKB.f82bZkQM04VWy', -- 1111
         'Anatolii Omelchenko');
 
 INSERT INTO user_role
