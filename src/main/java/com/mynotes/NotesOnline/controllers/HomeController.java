@@ -8,6 +8,7 @@ public class HomeController {
 
     @GetMapping(value = {"/", "/home"})
     public String index() {
-        return "redirect:/profile";
+        return "main";
     }
+
 }

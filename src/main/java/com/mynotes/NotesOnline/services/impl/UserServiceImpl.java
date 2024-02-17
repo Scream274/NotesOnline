@@ -5,6 +5,7 @@ import com.mynotes.NotesOnline.repositories.UserRepository;
 import com.mynotes.NotesOnline.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -12,10 +13,12 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder encoder;
 
     @Override
     public void addUser(NotesUser user) {
-
+        user.setPassword(encoder.encode(user.getPassword()));
+        userRepository.save(user);
     }
 
     @Override
