@@ -3,10 +3,7 @@ package com.mynotes.NotesOnline.models;
 import com.mynotes.NotesOnline.models.enums.Priority;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -14,8 +11,10 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @ToString
+@Builder
 @RequiredArgsConstructor
 @Table(name = "notes")
+@AllArgsConstructor
 public class Note {
 
     @Id
