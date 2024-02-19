@@ -2,7 +2,7 @@
 
 ## Overview
 
-The "Notes Online" Spring Boot application is designed to help users manage and organize their notes effectively. It provides a user-friendly platform for creating, editing, and deleting notes with priority settings.
+The "Notes Online" Spring Boot application is designed to help users manage and organize their notes effectively. It provides a user-friendly platform for creating, editing, deleting and downloading notes with priority settings.
 
 ## Key Features
 
@@ -36,16 +36,19 @@ The "Notes Online" Spring Boot application is designed to help users manage and 
 
 ## How to Use
 
-1. **Registration:**
+1. **Login and Registration:**
    - Visit the registration page (`/register`) to create a new account.
-
-2. **Login:**
    - Access the login page (`/login`) to log in with your registered credentials.
+  
+  ![login](https://github.com/Scream274/NotesOnline/assets/108679243/100c0a6d-e578-42b3-b0a4-0240bc775d92)
 
-3. **Note Management:**
-   - Navigate to the main page (`/profile`) to create, edit, and delete notes.
+2. **Note Management:**
+   - Navigate to the main page (`/profile`) to create, edit, delete and download notes.
 
-4. **Logout:**
+  
+  ![profile](https://github.com/Scream274/NotesOnline/assets/108679243/93d88bb6-0c2a-48ba-9220-f71df3579bcd)
+
+3. **Logout:**
    - Use the "Logout" button to securely log out from your account.
 
 ## Note
