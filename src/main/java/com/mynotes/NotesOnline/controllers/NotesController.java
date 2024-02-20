@@ -2,6 +2,7 @@ package com.mynotes.NotesOnline.controllers;
 
 import com.mynotes.NotesOnline.models.Note;
 import com.mynotes.NotesOnline.services.NotesService;
+import com.mynotes.NotesOnline.services.SecurityService;
 import com.mynotes.NotesOnline.services.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +10,7 @@ import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,8 +27,10 @@ public class NotesController {
 
     private final NotesService notesService;
     private final UserService userService;
+    private final SecurityService securityService;
 
     @GetMapping("/edit/{noteId}")
+    @PreAuthorize("@securityService.isNoteOwner(#noteId, principal.username)")
     public String showEditForm(@PathVariable Long noteId, Model model) {
         model.addAttribute("note", notesService.get(noteId));
         return "note-edit";
@@ -42,6 +46,7 @@ public class NotesController {
     }
 
     @GetMapping("/delete/{noteId}")
+    @PreAuthorize("@securityService.isNoteOwner(#noteId, principal.username)")
     public String deleteNote(@PathVariable Long noteId) {
         notesService.remove(noteId);
         return "redirect:/profile";
@@ -65,6 +70,7 @@ public class NotesController {
     }
 
     @GetMapping("/download/{id}")
+    @PreAuthorize("@securityService.isNoteOwner(#id, principal.username)")
     public ResponseEntity<ByteArrayResource> downloadFile(@PathVariable Long id) {
         Note note = notesService.get(id);
         String encodedTitle = UriUtils.encode(note.getTitle(), StandardCharsets.UTF_8);

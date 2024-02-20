@@ -33,7 +33,8 @@ public class NotesServiceImpl implements NotesService {
 
     @Override
     public Note get(Long id) {
-        return notesRepository.getReferenceById(id);
+        return notesRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Note with id '" + id + "' was not found!"));
     }
 
     @Override
