@@ -51,7 +51,35 @@ The "Notes Online" Spring Boot application is designed to help users manage and 
 3. **Logout:**
    - Use the "Logout" button to securely log out from your account.
 
+## Testing
+
+The "Notes Online" application undergoes comprehensive testing to ensure its reliability and functionality. The testing process includes unit testing and integration testing.
+
+### Unit Testing
+
+The application's individual components are tested in isolation using JUnit 5. Mock objects are created using Mockito to isolate units during testing.
+
+### Integration Testing
+
+Integration tests are performed to verify the interactions between different components of the application. Testcontainers is utilized to simplify integration testing with containerized dependencies.
+
+### Testing Frameworks
+
+- **JUnit 5:** A widely-used testing framework for Java applications.
+- **Mockito:** A mocking framework for creating and using mock objects for unit testing.
+
+### Containerized Testing
+
+Testcontainers is employed to facilitate integration testing with containerized dependencies, ensuring a consistent and reproducible testing environment.
+
+### Running Tests
+
+To run the tests locally, execute the following command using Maven:
+
+
+```bash
+mvn clean test
+```
 ## Note
 
 For a complete understanding of the application, refer to the provided source code. Ensure that the necessary dependencies are configured for a smooth execution.
-
