@@ -6,14 +6,17 @@ import com.mynotes.NotesOnline.models.Note;
 import com.mynotes.NotesOnline.models.NotesUser;
 import com.mynotes.NotesOnline.models.enums.Priority;
 import com.mynotes.NotesOnline.services.NotesService;
+import com.mynotes.NotesOnline.services.SecurityService;
 import com.mynotes.NotesOnline.services.UserService;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -23,9 +26,10 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WithMockUser(authorities = {"ADMIN", "USER"})
+@WithMockUser(authorities = {"ADMIN", "USER"}, username = "test@gmail.com")
 @Import(WebSecurityConfig.class)
 @WebMvcTest(NotesController.class)
+@ComponentScan(basePackageClasses = {SecurityService.class})
 public class NotesControllerTest {
 
     @Autowired
@@ -39,12 +43,17 @@ public class NotesControllerTest {
 
     @MockBean
     private CustomUserDetailService userDetailsService;
+
+    @MockBean
+    private SecurityService securityService;
+
     @Test
     @SneakyThrows
     public void testShowEditForm() {
         long noteId = 1L;
         Note note = new Note();
         when(notesService.get(noteId)).thenReturn(note);
+        when(securityService.isNoteOwner(noteId, "test@gmail.com")).thenReturn(true);
 
         mockMvc.perform(get("/notes/edit/{noteId}", noteId))
                 .andExpect(status().isOk())
@@ -67,11 +76,11 @@ public class NotesControllerTest {
     public void testAddNewNote() {
         when(userService.findByEmail(any())).thenReturn(new NotesUser());
         mockMvc.perform(post("/notes/add-note")
-                .contentType(MediaType.APPLICATION_JSON)
-                .param("title", "Test Title")
-                .param("text", "Test Text")
-                .param("priority", "LOW")
-        )
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .param("title", "Test Title")
+                        .param("text", "Test Text")
+                        .param("priority", "LOW")
+                )
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/profile"));
 
@@ -88,7 +97,9 @@ public class NotesControllerTest {
                 .date(LocalDateTime.parse("2024-02-19T18:09"))
                 .priority(Priority.MEDIUM)
                 .build();
+
         when(notesService.get(noteId)).thenReturn(note);
+        when(securityService.isNoteOwner(noteId, "test@gmail.com")).thenReturn(true);
 
         mockMvc.perform(get("/notes/download/{id}", noteId))
                 .andExpect(status().isOk())
@@ -123,10 +134,77 @@ public class NotesControllerTest {
     public void testDeleteNote() {
         long noteId = 1L;
 
+        when(securityService.isNoteOwner(noteId, "test@gmail.com")).thenReturn(true);
+
         mockMvc.perform(get("/notes/delete/{noteId}", noteId))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/profile"));
 
         verify(notesService).remove(eq(noteId));
     }
+
+    @Test
+    @SneakyThrows
+    public void testDeleteNoteWhenUserIsNotOwner() {
+        long noteId = 1L;
+
+        when(securityService.isNoteOwner(noteId, "test@gmail.com")).thenReturn(false);
+
+        mockMvc.perform(get("/notes/delete/{noteId}", noteId))
+                .andExpect(status().isForbidden());
+
+        verify(notesService, never()).remove(eq(noteId));
+    }
+
+    @Test
+    @WithAnonymousUser
+    @SneakyThrows
+    public void testDeleteNoteWhenUserIsNotAuthorized() {
+        long noteId = 1L;
+
+        mockMvc.perform(get("/notes/delete/{noteId}", noteId))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrlPattern("**/login"));
+
+        verify(notesService, never()).remove(eq(noteId));
+    }
+
+    @Test
+    @SneakyThrows
+    public void testAddNewNoteValidationFailure() {
+        var invalidTextParam = "x";
+
+        mockMvc.perform(post("/notes/add-note")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .param("title", invalidTextParam)
+                        .param("text", invalidTextParam)
+                        .param("priority", "LOW")
+                )
+                .andExpect(status().isOk())
+                .andExpect(view().name("note-add"))
+                .andExpect(model().hasErrors())
+                .andExpect(model().errorCount(2));
+
+        verify(notesService, never()).save(any(Note.class));
+    }
+
+    @Test
+    @SneakyThrows
+    public void testUpdateNewNoteValidationFailure() {
+        var invalidTextParam = "x";
+
+        mockMvc.perform(post("/notes/update")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .param("title", invalidTextParam)
+                        .param("text", invalidTextParam)
+                        .param("priority", "LOW")
+                )
+                .andExpect(status().isOk())
+                .andExpect(view().name("note-edit"))
+                .andExpect(model().hasErrors())
+                .andExpect(model().errorCount(2));
+
+        verify(notesService, never()).update(anyLong(), any(Note.class));
+    }
+
 }

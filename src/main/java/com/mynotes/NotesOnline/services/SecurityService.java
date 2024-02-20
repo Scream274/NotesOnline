@@ -12,12 +12,6 @@ public class SecurityService {
 
     public boolean isNoteOwner(Long noteId, String userEmail) {
         Note note = notesService.get(noteId);
-        boolean res = note.getUser() != null && note.getUser().getEmail().equals(userEmail);
-
-        System.out.println("id: " + noteId);
-        System.out.println("email: " + userEmail);
-        System.out.println("res: " + res);
-
-        return res;
+        return note.getUser() != null && note.getUser().getEmail().equals(userEmail);
     }
 }
