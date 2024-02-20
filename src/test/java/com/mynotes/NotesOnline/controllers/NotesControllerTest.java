@@ -1,7 +1,5 @@
 package com.mynotes.NotesOnline.controllers;
 
-import com.mynotes.NotesOnline.config.CustomUserDetailService;
-import com.mynotes.NotesOnline.config.WebSecurityConfig;
 import com.mynotes.NotesOnline.models.Note;
 import com.mynotes.NotesOnline.models.NotesUser;
 import com.mynotes.NotesOnline.models.enums.Priority;
@@ -10,15 +8,12 @@ import com.mynotes.NotesOnline.services.SecurityService;
 import com.mynotes.NotesOnline.services.UserService;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
 
@@ -27,22 +22,15 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WithMockUser(authorities = {"ADMIN", "USER"}, username = "test@gmail.com")
-@Import(WebSecurityConfig.class)
 @WebMvcTest(NotesController.class)
 @ComponentScan(basePackageClasses = {SecurityService.class})
-public class NotesControllerTest {
-
-    @Autowired
-    private MockMvc mockMvc;
+public class NotesControllerTest extends BaseControllerTest {
 
     @MockBean
     private NotesService notesService;
 
     @MockBean
     private UserService userService;
-
-    @MockBean
-    private CustomUserDetailService userDetailsService;
 
     @MockBean
     private SecurityService securityService;

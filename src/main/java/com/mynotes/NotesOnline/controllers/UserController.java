@@ -1,7 +1,5 @@
 package com.mynotes.NotesOnline.controllers;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import com.mynotes.NotesOnline.models.Note;
 import com.mynotes.NotesOnline.models.NotesUser;
 import com.mynotes.NotesOnline.services.UserService;
@@ -13,14 +11,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import java.security.Principal;
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 @RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
-    private final ObjectMapper objectMapper;
 
     @GetMapping("/profile")
     public String profile(Model model, Principal principal) {
