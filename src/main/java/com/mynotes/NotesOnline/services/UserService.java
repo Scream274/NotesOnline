@@ -9,6 +9,4 @@ public interface UserService {
 
     NotesUser findByEmail(String email);
 
-    @Transactional
-    void update(NotesUser user);
 }

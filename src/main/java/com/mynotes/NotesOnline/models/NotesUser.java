@@ -16,8 +16,10 @@ import static jakarta.persistence.CascadeType.*;
 @Entity
 @Getter
 @Setter
+@Builder
 @ToString
-@RequiredArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "users")
 public class NotesUser {
 

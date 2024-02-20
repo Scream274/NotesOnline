@@ -27,8 +27,4 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new UsernameNotFoundException("User with email '" + email + "' was not found!"));
     }
 
-    @Override
-    public void update(NotesUser user) {
-
-    }
 }
