@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    username: postgres
+    password: 'postgres'
+    url: 'jdbc:tc:postgresql:16-alpine:///test_db'
+
+  jpa:
+    properties:
+      hibernate:
+        format_sql: 'true'
+    show-sql: 'true'
+    hibernate:
+      ddl-auto: none
+
+
+
