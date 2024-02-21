@@ -25,6 +25,6 @@ public class CustomErrorController implements ErrorController {
                 return "500_page";
             }
         }
-        return "404_page";
+        return "500_page";
     }
 }
