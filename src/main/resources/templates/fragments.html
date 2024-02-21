@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Fragments</title>
+</head>
+<body>
+
+<div th:fragment="head_fragment(title)">
+    <meta charset="UTF-8"/>
+    <title th:text="'University CMS - ' + ${title}">Title...</title>
+    <link rel="stylesheet"
+          href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css"/>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</div>
+
+<div th:fragment="error_page(code, code_text, description)" class="container-fluid">
+    <div class="container">
+        <div class="row justify-content-start">
+            <div>
+                <div class="starsec"></div>
+                <div class="starthird"></div>
+                <div class="starfourth"></div>
+                <div class="starfifth"></div>
+            </div>
+            <div class="lamp__wrap">
+                <div class="lamp">
+                    <div class="cable"></div>
+                    <div class="cover"></div>
+                    <div class="in-cover">
+                        <div class="bulb"></div>
+                    </div>
+                    <div class="light"></div>
+                </div>
+            </div>
+            <section class="error">
+                <div class="error__content">
+                    <div class="error__message message">
+                        <h1 th:text="${code}" class="message__title">code</h1>
+                        <h1 th:text="${code_text}" class="message__title">code_text</h1>
+                        <p th:text="${description}" class="message__text">...</p>
+                    </div>
+                    <div class="error__nav e-nav">
+                        <a href="/" class="e-nav__link"></a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+
+
+</body>
+</html>

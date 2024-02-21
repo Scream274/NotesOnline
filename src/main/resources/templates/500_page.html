@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:include="fragments :: head_fragment(title='page-500')">
+</head>
+
+<link rel="stylesheet" href="/css/error-page.css">
+
+<section class="main-section">
+    <div class="container py-5">
+        <div th:replace="fragments :: error_page(
+            code='500',
+            code_text='Internal Server Error',
+            description='We\'re sorry, but something went wrong on our end. Our team has been notified, and we\'re working to fix the issue. Please try again later or contact support if the problem persists.')"></div>
+    </div>
+</section>
+
